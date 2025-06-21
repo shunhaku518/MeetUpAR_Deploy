@@ -1,0 +1,53 @@
+﻿@model ARPictureChooseVM
+
+<div class="full-height flex-col-container">
+    <div class="flex-block page-title-section">
+        <div class="page-title jersey-25-regular">Choose AR Marker</div>
+        <div class="page-sub-title">ARマーカーを選ぶ</div>
+    </div>
+    <form class="flex-block" method="post" asp-action="ChooseAR">
+        <div class="flex-block AR-obj-block">
+            @foreach (var picture in Model.ARPictures)
+            {
+                <div class="AR-picture-wraper">
+                    <img src="@picture.ImageUrl" alt="Picture @picture.ImageTitle" class="selectable-picture" />
+                    <input hidden asp-for="ARPictures[@Model.ARPictures.IndexOf(picture)].Id" value="@picture.Id" />
+                    <input hidden asp-for="ARPictures[@Model.ARPictures.IndexOf(picture)].ImageTitle" value="@picture.ImageTitle" />
+                    <input hidden asp-for="ARPictures[@Model.ARPictures.IndexOf(picture)].ImageUrl" value="@picture.ImageUrl" />
+                    <input hidden asp-for="ARPictures[@Model.ARPictures.IndexOf(picture)].IsSelected" value="@picture.IsSelected" class="isSelected-input" />
+                </div>
+                <div class="flex-block mb-5 page-sub-title">@picture.ImageTitle</div>
+            }
+        </div>
+        <div class="flex-block float-btn-block">
+            <a class="custom-link back-link btn-float" asp-action="ChooseLocation">< BACK</a>
+            <button type="submit" class="btn btn-submit btn-float" disabled>GENERATE !</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('.AR-picture-wraper').on('click', function () {
+                $('.selectable-picture').removeClass('selected');
+                $('.isSelected-input').val('false');
+                $('.isSelected-input').prop('checked', false);
+
+                var image = $(this).find('.selectable-picture');
+                image.addClass('selected');
+
+                var isSelectedInput = $(this).find('.isSelected-input');
+                isSelectedInput.val('true');
+                isSelectedInput.prop('checked', true);
+                $(".btn-submit").removeAttr('disabled');
+            });
+
+            var firstChecked = $('.AR-picture-wraper input[type="checkbox"]:checked').first();
+            if (firstChecked.length && firstChecked.val() == "True") {
+                firstChecked.closest('.AR-picture-wraper').trigger('click');
+            }
+        });
+    </script>
+}

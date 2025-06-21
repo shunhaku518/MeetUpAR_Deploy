@@ -1,0 +1,8 @@
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\MeetUpAR.exe
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\appsettings.json
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\MeetUpAR.dll
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\MeetUpAR.deps.json
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\MeetUpAR.runtimeconfig.json
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\MeetUpAR.pdb
+C:\Users\AUNG KYAW THU\OneDrive\デスクトップ\MeetUpAR\MeetUpAR\MeetUpAR\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll

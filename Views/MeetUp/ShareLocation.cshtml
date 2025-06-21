@@ -1,0 +1,128 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@model MeetData
+
+<div class="full-height flex-col-container link-shared-section">
+    <div class="flex-block page-title-section">
+        <div class="page-title jersey-25-regular">Meet Up spot <br />has been created!</div>
+        <div class="page-sub-title">待ち合わせ場所を設定しました。</div>
+    </div>
+    <div class="flex-block">
+        <div class="flex-block map-choosed-section">
+            <div class="choosed-map" id="map"></div>
+            <div class="page-sub-title my-3">下記リンクからカメラを起動して、 <br />待ち合わせスポットを確認</div>
+            <a role="button" class="btn btn-submit mb-4" id="openAR" asp-action="ShowAR"
+               asp-route-latitude="@Model.GoogleMapLatitude" asp-route-longitude="@Model.GoogleMapLongitude">ARを起動する</a>
+            <hr class="white-line" />
+        </div>
+    </div>
+    <div class="flex-block map-sharedBtn-section">
+        <div class="page-sub-title mb-3">相手に送る</div>
+        <button type="button" class="btn btn-line-shared mb-3" id="sendByLine"></button>
+        <button type="button" class="btn btn-link-shared" id="copyLocation">リンクをコピーする</button>
+        <span id="copyNotify" style="display: none;">リンクがコピーされました！</span>
+        <button class="btn btn-link-shared my-3" id="shareLocation">シェア</button>
+        <a class="custom-link mt-3" asp-action="Index">TOPに戻る</a>
+        <input id="locationUrl" type="text" readonly style="display:none;" class="form-control"
+               value=@($"{Configuration["MeetUpSettings:BaseURL"]}/MeetUp/ShowMap?latitude={Model.GoogleMapLatitude}&longitude={Model.GoogleMapLongitude}") />
+    </div>
+    <div class="flex-block float-btn-block">
+        <a class="custom-link back-link btn-float" asp-action="ChooseAR">< BACK</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src=@($"https://maps.googleapis.com/maps/api/js?key={Configuration["MeetUpSettings:GoogleMapKey"]}&callback=initMap") async defer></script>
+    <script>
+        function initMap() {
+            let lat = parseFloat("@Model.GoogleMapLatitude");
+            let lng = parseFloat("@Model.GoogleMapLongitude");
+
+            let location = { lat: lat, lng: lng };
+            let map = new google.maps.Map(document.getElementById('map'), {
+                center: location,
+                zoom: 17,
+                disableDefaultUI: true,
+                zoomControl: false,
+                draggable: false,            
+                scrollwheel: false,          
+                disableDoubleClickZoom: false,
+                clickableIcons: false,        
+                gestureHandling: "none",
+            });
+
+            let marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: false,
+                title: "ここにおる",
+                icon: {
+                    url: `@Configuration["MeetUpSettings:GooglePinPic"]`,
+                    scaledSize: new google.maps.Size(40, 50),
+                },
+            });
+
+            const locationButton = document.createElement("button");
+            locationButton.classList.add("custom-map-control-button-readonly");
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
+        }
+
+        document.getElementById('copyLocation').addEventListener('click', function () {
+            const copyText = document.getElementById('locationUrl');
+            if (copyText) {
+                copyText.style.display = "block";
+                copyText.select();
+                document.execCommand('copy');
+                let copyNotifyTxt = document.getElementById('copyNotify');
+                copyNotifyTxt.style.display = 'block';
+                setTimeout(function () {
+                    copyNotifyTxt.style.display = 'none';
+                }, 5000);
+                copyText.style.display = "none";
+            }
+        });
+
+        //Share via Line
+        document.getElementById('sendByLine').addEventListener('click', function () {
+            const linkToShare = encodeURIComponent(document.getElementById('locationUrl').value);
+
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            try {
+                if (isMobile) {
+                    window.location.href = `line://msg/text/?${linkToShare}`;
+
+                    setTimeout(function () {
+                        if (!document.hasFocus()) {
+                            console.log("Line app opened successfully.");
+                        } else {
+                            alert("Lineをインストールしてください。");
+                            throw new Error("Line app did not open. The app might not be installed.");
+                        }
+                    }, 2000);
+                } else {
+                    window.open(`https://line.me/R/msg/text/?${linkToShare}`, '_blank');
+                }
+            } catch (error) {
+                console.error(error.message);
+                alert("Lineをインストールしてください。")
+            }
+        });
+
+        document.getElementById('shareLocation').addEventListener('click', function () {
+            const locationUrl = document.getElementById('locationUrl').value;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check this location!',
+                    text: 'Here is a location I want to share with you:',
+                    url: locationUrl
+                })
+                    .then(() => console.log('Successful share'))
+                    .catch(error => console.log('Error sharing:', error));
+            } else {
+                alert('Your browser does not support the Web Share API');
+            }
+        });
+    </script>
+
+}

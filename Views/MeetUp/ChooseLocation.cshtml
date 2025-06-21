@@ -1,0 +1,188 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@model MeetData
+
+<div class="full-height flex-col-container" id="chooseLoaction">
+    <div class="flex-block page-title-section">
+        <div class="page-title jersey-25-regular">Choose Meet Up spot</div>
+        <div class="page-sub-title">待ち合わせ場所を選ぶ</div>
+    </div>
+    <div class="flex-block map-section" id="map"></div>
+    <div class="flex-block map-button-section">
+        <a class="custom-link back-link" asp-action="Index">< BACK</a>
+        <form method="post">
+            <button type="submit" class="btn btn-submit" asp-action="ChooseLocation">NEXT ></button>
+            <input asp-for="GoogleMapLatitude" id="mapLatitude" hidden class="form-control" />
+            <input asp-for="GoogleMapLongitude" id="mapLongitude" hidden class="form-control" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src=@($"https://maps.googleapis.com/maps/api/js?key={Configuration["MeetUpSettings:GoogleMapKey"]}&callback=initMap") async defer></script>
+
+    <script>
+
+        let map, marker, infoWindow, locationCircle;
+        let initialRadius = 10;
+        let initialZoomSize = 17;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: initialZoomSize,
+                center: {
+                    lat: Number.parseFloat(`@Configuration["MeetUpSettings:DefaultLatitude"]`),
+                    lng: Number.parseFloat(`@Configuration["MeetUpSettings:DefaultLongitude"]`)
+                },
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                zoomControl: false,
+                scaleControl: false,
+                rotateControl: false,
+                overviewMapControl: false
+            });
+
+            infoWindow = new google.maps.InfoWindow();
+
+            const locationButton = document.createElement("button");
+            locationButton.classList.add("custom-map-control-button");
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
+            locationButton.addEventListener("click", () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            setCircle(pos);
+                            map.setCenter(pos);
+                            map.setZoom(initialZoomSize);
+                        },
+                        () => {
+                            handleLocationError(true, infoWindow, map.getCenter());
+                        },
+                        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                    );
+                } else {
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    setLocationMarker(true, position);
+                    let pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    setCircle(pos);
+                }, function () {
+                    setLocationMarker(false, undefined);
+                });
+            } else {
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+            google.maps.event.addListener(map, 'click', function (event) {
+                let pos = {
+                    lat: event.latLng.lat(),
+                    lng: event.latLng.lng()
+                };
+                placeMarker(pos);
+            });
+
+            google.maps.event.addListener(map, 'zoom_changed', function () {
+                adjustCircleRadius();
+            });
+        }
+
+        function setLocationMarker(isBrowserLocationAccessEnabled, position) {
+            let pos = {
+                lat: Number.parseFloat(`@Configuration["MeetUpSettings:DefaultLatitude"]`),
+                lng: Number.parseFloat(`@Configuration["MeetUpSettings:DefaultLongitude"]`)
+            };
+            if (isBrowserLocationAccessEnabled && `@Configuration["MeetUpSettings:IsUsedCurrentLocation"]` === "True") {
+                pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+            }
+
+            placeMarker(pos);
+            infoWindow.setPosition(pos);
+            map.setCenter(pos);
+            updateLocationUrl(pos.lat, pos.lng);
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+
+        function placeMarker(location) {
+            if (marker) {
+                marker.setPosition(location);
+            } else {
+                setMarker(location);
+            }
+
+            updateLocationUrl(location.lat, location.lng);
+        }
+
+        function setMarker(location) {
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                draggable: true,
+                title: "ここにおる",
+                icon: {
+                    url: `@Configuration["MeetUpSettings:GooglePinPic"]`,
+                    scaledSize: new google.maps.Size(40, 50),
+                },
+            });
+            google.maps.event.addListener(marker, 'dragend', function () {
+                updateLocationUrl(marker.getPosition().lat(), marker.getPosition().lng());
+            });
+        }
+
+        function setCircle(location) {
+            if (locationCircle) {
+                locationCircle.setMap(null);
+            }
+            locationCircle = new google.maps.Circle({
+                strokeColor: "#145bc3",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#145bc3",
+                fillOpacity: 0.6,
+                map: map,
+                center: location,
+                clickable: false,
+                radius: initialRadius,
+            });
+            adjustCircleRadius();
+        }
+
+        function adjustCircleRadius() {
+            const zoom = map.getZoom();
+            const radius = calculateRadiusBasedOnZoom(zoom);
+            if (locationCircle) {
+                locationCircle.setRadius(radius);
+            }
+        }
+
+        function calculateRadiusBasedOnZoom(zoom) {
+            return initialRadius * Math.pow(2, initialZoomSize - zoom);
+        }
+
+        function updateLocationUrl(lat, lng) {
+            document.getElementById('mapLatitude').value = lat;
+            document.getElementById('mapLongitude').value = lng;
+        }
+    </script>
+}

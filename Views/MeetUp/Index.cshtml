@@ -1,0 +1,111 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<div class="full-height home-bg" id="start-page">
+    <div class="flex-col-container home-primary-section">
+        <div class="home-title-block flex-block app-title jersey-25-regular">Meet Up AR</div>
+        <div class="home-image-block flex-block">
+            <img src="@Configuration["MeetUpSettings:MainPic"]" />
+        </div>
+        <div class="home-btnStart-block flex-block">
+
+                    <div class="flex-block mb-3">
+                    <a role="button" asp-action="ChooseLocation" class="btn btn-start jersey-25-regular btn-float start-btn-one">START</a>
+                    </div>
+                <div class="float-btn-block display-none" id="btn-start-hidden-block">
+                    <div class="btn-hidden-start-flex">
+                    <button type="button" class="btn btn-start jersey-25-regular btn-float" id="btn-howtoplay-hidden" >HOW TO PLAY</button>
+                    <a role="button" asp-action="ChooseLocation" class="btn btn-start jersey-25-regular btn-float" id="btn-start-hidden" >START</a>
+                    </div>
+                </div>
+
+            <div class="home-detailsViewTitle-block flex-block" id="viewDetails">
+                <div class="span-details-title">view details</div>
+            </div>
+        </div>
+    </div>
+    <div class="home-details-section" id="home-details-section">
+        <div class="explain-block">
+            <div class="flex-block page-title jersey-25-regular">WHAT’S Meet Up AR?</div>
+            <div class="flex-block page-sub-title">Meet Up ARとは？</div>
+            <div class="flex-block squared-box jersey-25-regular">Creat your original spot <br />with AR</div>
+            <div class="flex-block page-sub-title mt-2">ARでオリジナルの待ち合わせスポットを 設置して、楽しく待ち合わせしよう。</div>
+            <div class="flex-block txt-description mt-4">
+                待ち合わせ場所をARで設定できるサービスです。待ち合わせスポットは、ARカメラを通して大きなシンボルのように表示され、詳細なマップをみなくてもARオブジェクトを目指して歩くことができます。混雑した場所を避けて好きな場所に設定することで、楽に合流することが可能です。
+            </div>
+            <div class="flex-block rounded-squared-box">
+                <div class="flex-block roundex-box-label">
+                    コンセプト
+                </div>
+                <div class="flex-block rounded-box-title jersey-25-regular">
+                    NO MAP
+                </div>
+                <div class="flex-block rounded-box-description">
+                    マップはありません<br />
+                    ARオブジェクトを目指して歩いてください。
+                </div>
+                <div class="flex-block rounded-box-title jersey-25-regular">
+                    Let’s Stroll
+                </div>
+                <div class="flex-block rounded-box-description">
+                    迷ったり寄り道OK<br />
+                    街の新たな発見をして、友人とシェアして楽しみながら 歩きましょう。
+                </div>
+            </div>
+        </div>
+        <div class="howToPlay-block" id="howToPlay-block">
+            <div class="flex-block">
+                <div class="page-title jersey-25-regular">HOW TO PLAY</div>
+                <div class="page-sub-title">やり方</div>
+            </div>
+            <div class="flex-block play-step">
+                <div class="play-step-img"><img src="~/images/step1.png" /></div>
+                <div class="page-sub-title">STEP1</div>
+                <div class="txt-description play-step-description">待ち合わせ場所をマップ上でピンします。</div>
+            </div>
+            <div class="flex-block play-step">
+                <div class="play-step-img"><img src="~/images/step2.png" /></div>
+                <div class="page-sub-title">STEP2</div>
+                <div class="txt-description play-step-description">表示するARオブジェクトを選びます。</div>
+            </div>
+            <div class="flex-block play-step">
+                <div class="play-step-img"><img src="~/images/step3.png" /></div>
+                <div class="page-sub-title">STEP3</div>
+                <div class="txt-description play-step-description">待ち合わせ相手に待ち合わせ場所をシェア！</div>
+            </div>
+            <div class="flex-block play-step mb-5">
+                <div class="play-step-img"><img src="~/images/step4.png" /></div>
+                <div class="page-sub-title">STEP4</div>
+                <div class="txt-description play-step-description">カメラを起動し、ARで表示された スポットを目指して歩きます。 行き方はあなた次第です！</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('scroll', function () {
+            const hiddenDiv = document.getElementById('btn-start-hidden-block');
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.documentElement.scrollHeight;
+            const windowHeight = window.innerHeight;
+            if (scrollPosition > (windowHeight - (windowHeight*23)/100)) {
+                // hiddenDiv.style.display = 'block';
+                hiddenDiv.classList.remove("display-none");
+            } else {
+                // hiddenDiv.style.display = 'none';
+                hiddenDiv.classList.add("display-none");
+            }
+        });
+
+        document.getElementById('viewDetails').addEventListener('click', function () {
+            const targetDiv = document.getElementById('home-details-section');
+            targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        document.getElementById('btn-howtoplay-hidden').addEventListener('click', function () {
+            const targetDiv = document.getElementById('howToPlay-block');
+            targetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        
+    </script>
+}

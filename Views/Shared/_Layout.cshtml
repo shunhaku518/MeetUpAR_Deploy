@@ -1,0 +1,47 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="@Configuration["MeetUpSettings:SiteLogo"]" />
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <meta property="og:title" content="@Configuration["MeetUpSettings:SiteName"]" />
+    <meta property="og:url" content="@Configuration["MeetUpSettings:LinkPreviewURL"]" />
+    <meta property="og:image" content="@($"{Configuration["MeetUpSettings:BaseURL"]}{Configuration["MeetUpSettings:LinkPreviewImage"]}")" />
+    <meta property="og:description" content="@Configuration["MeetUpSettings:LinkPreviewDescription"]" />
+    <meta property="og:type" content="@Configuration["MeetUpSettings:SiteName"]">
+    <meta property="og:site_name" content="@Configuration["MeetUpSettings:SiteName"]">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@Configuration["MeetUpSettings:SiteName"]">
+    <meta name="twitter:image" content="@($"{Configuration["MeetUpSettings:BaseURL"]}{Configuration["MeetUpSettings:LinkPreviewImage"]}")">
+    <meta name="twitter:description" content="@Configuration["MeetUpSettings:LinkPreviewDescription"]">
+
+    <title>@Configuration["MeetUpSettings:SiteName"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MeetUpAR.styles.css" asp-append-version="true" />
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.0.0/aframe/build/aframe-ar.js"></script>
+</head>
+<body>
+    <div class="full-height custom-container">
+        <main role="main" class="full-height">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,499 @@
+@font-face {
+    font-family: 'Jersey25';
+    src: url('/fonts/Jersey_25/Jersey25-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.jersey-25-regular {
+    font-family: 'Jersey25', sans-serif;
+}
+
+html {
+    /*font-size: 1rem;*/
+}
+
+@media (min-width: 768px) {
+    html {
+        /*font-size: 1.5rem;*/
+    }
+}
+
+/*共通*/
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    html, body {
+        /*font-size: 1.5rem;*/
+    }
+
+    .home-image-block img {
+        /*max-width: 400px !important;*/
+    }
+
+    .AR-picture-wraper {
+        width: 30vh !important;
+        height: 20vh !important;
+    }
+
+    .map-choosed-section {
+        min-width: 30vh;
+        max-width: 45vh;
+    }
+    .play-step img{
+        max-width: 54vw;
+    }
+    .explain-block, .howToPlay-block{
+        max-width: 54vw !important;
+        padding: 0px !important;
+    }
+    #btn-start-hidden-block {
+        max-width: 54vw !important;
+    }
+    .AR-picture-wraper img.selectable-picture:hover {
+        background-color: rgb(230, 234, 54, 43%);
+    }
+}
+.display-none{
+    display: none;
+}
+.custom-container{
+
+}
+
+.full-height {
+    height: 100%;
+}
+
+.flex-col-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.flex-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    position: relative;
+    width: 100%;
+}
+
+.btn-submit, .btn-title-disabled, .btn-start {
+    color: #17647E;
+    background-color: #FBFF3C;
+    font-size: 1.5rem;
+    padding: 6px 15px 3px 15px;
+    border-radius: 10px;
+    outline: none;
+    font-weight: bold;
+}
+
+    .btn-submit:focus, .btn-title-disabled:focus, .btn-start:focus {
+        color: #17647E;
+        background-color: #FBFF3C;
+        outline: none;
+    }
+
+    .btn-submit:hover, .btn-start:hover {
+        color: #17647E;
+        background-color: chartreuse;
+        outline: none;
+    }
+
+.btn.btn-submit:disabled {
+    background-color: #939393;
+    opacity: 1;
+}
+
+.btn-link-shared {
+    color: #FBFF3C;
+    font-size: 1.5rem;
+    padding: 6px 10px 4px 10px;
+    border-radius: 10px;
+    outline: none;
+    font-weight: bold;
+    border: 1px solid #FBFF3C;
+    width: 204px;
+}
+
+    .btn-link-shared:hover {
+        color: #17647E;
+        background-color: chartreuse;
+        outline: none;
+    }
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+
+.app-title {
+    color: #fff;
+    font-size: 5rem;
+    align-items: center;
+    justify-content: end;
+    text-align: center;
+}
+
+.page-title {
+    color: #FBFF3C;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.page-sub-title {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+}
+
+.txt-description {
+    color: #fff;
+    font-size: 11px;
+}
+
+.page-title-section {
+    flex: 0 0 20%;
+    background-color: #17647E;
+    justify-content: end;
+    padding-bottom: 20px;
+}
+
+.white-line {
+    border: 0;
+    background-color: #fff;
+    margin: 20px 0;
+    width: 90%;
+    opacity: 0.8;
+}
+
+a.custom-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+    a.custom-link:hover {
+        color: #FBFF3C;
+    }
+/* Define the fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Start from fully transparent */
+    }
+
+    to {
+        opacity: 1; /* End at fully visible */
+    }
+}
+
+/* Apply the fade-in animation to the body */
+#start-page {
+    animation: fadeIn 2s ease-in forwards; /* Animation properties */
+    opacity: 0; /* Initial opacity to ensure the fade-in effect */
+}
+.back-link {
+    position: absolute;
+    left: 20px;
+    background-color: #939393;
+    padding: 8px 5px;
+    border-radius: 5px;
+}
+.back-link:hover{
+    background-color: rgba(147, 147, 147, 0.7);
+    color: #fff !important;
+}
+
+/*スタートページ*/
+.home-primary-section {
+    margin-bottom: -30px;
+    text-align: center;
+    /*background: linear-gradient(to bottom, #326A52, #D78D1C, #9F841B);*/
+    /*background: linear-gradient(to bottom, #008080, #FFD700, #FF4500);*/
+    background-image: url('/images/homebackimg.png');
+    background-size: cover;
+    background-position: center;
+}
+    /*.home-primary-section:before {
+        width: 100%;
+        height: 100%;
+        content: "";
+        background-image: url('/images/HomeBackImg.png');
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-size: cover;
+        background-repeat: no-repeat, no-repeat;
+        z-index: -1;
+    }*/
+
+.home-title-block {
+    flex: 0 0 15%;
+}
+
+.home-image-block {
+    flex: 0 0 60%;
+}
+
+    .home-image-block img {
+        max-width: 90vw;
+        max-height: 55vh;
+        margin-left: 15px;
+    }
+
+.home-btnStart-block {
+    flex: 0 0 20%;
+}
+
+.span-details-title {
+    color: #fff;
+    font-size: 1.2rem;
+}
+.play-step-img{
+    margin-bottom: 8px;
+}
+    .span-details-title::before {
+        content: '\276F';
+        position: absolute;
+        left: 50%;
+        right: 50%;
+        transform: rotate(90deg);
+        color: white;
+        margin-top: 15px;
+        white-space: nowrap;
+        font-size: 1rem;
+    }
+
+.home-details-section {
+    background-color: #17647E;
+    border-radius: 35px 35px 0px 0px;
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.explain-block, .howToPlay-block {
+    display: flex;
+    flex-flow: column;
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.squared-box {
+    background: #FBFF3C;
+    color: #17647E;
+    font-size: 2.3rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.rounded-squared-box {
+    background: #FBFF3C;
+    color: #17647E;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-flow: column;
+    border-radius: 20px;
+}
+
+.roundex-box-label {
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.rounded-box-title {
+    padding: 3px;
+    background: #17647E;
+    color: #FBFF3C;
+    width: 50%;
+    font-size: 2.2rem;
+    margin: 5px;
+}
+
+.rounded-box-description {
+    padding: 5px 15px;
+}
+
+.play-step {
+    margin: 20px 0px;
+}
+
+    .play-step img {
+        width: 80vw;
+    }
+
+.play-step-description {
+    width: 60vw;
+    font-size: 12px;
+}
+
+.btn-start {
+    padding: 1px 45px 0px 48px;
+    font-size: 2rem;
+}
+    .btn-start.start-btn-one {
+        background-color: #17647E;
+        color: #FBFF3C;
+    }
+
+    .btn-float {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3), 0 6px 20px 0 rgba(0,0,0,0.29);
+    }
+
+ 
+
+.float-btn-block {
+    position: fixed;
+    bottom: 0;
+    left: auto;
+    right: auto;
+    width: 100%;
+    background: rgb(0, 0, 0, 0);
+    padding: 10px 0px;
+    z-index: 1;
+}
+
+/* Keyframes for Fade In from Top */
+@keyframes fadeInTop {
+    from {
+        opacity: 0;
+        transform: translateY(-100%); /* Move from top */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+#btn-start-hidden-block .btn-start {
+    animation: fadeInTop 1s forwards;
+    padding: 1px 10px 0px 13px
+}
+.btn-hidden-start-flex {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/*マップにピンを設定する画面*/
+.map-section {
+    flex: 0 0 65%;
+    width: 100%;
+    height: 100%;
+}
+
+.map-button-section {
+    flex: 0 0 15%;
+    background-color: #17647E;
+}
+
+/*AR選択ページ*/
+.AR-obj-block {
+    background-color: #17647E;
+    padding-bottom: 100px;
+}
+
+.AR-picture-wraper {
+    width: 90vw;
+    height: 50vw;
+    margin-bottom: 8px;
+}
+
+    .AR-picture-wraper img.selectable-picture:hover {
+        padding: 5px;
+    }
+
+    .AR-picture-wraper img.selectable-picture {
+        background-color: rgb(225, 225, 225, 40%);
+        width: 100%;
+        height: 100%;
+        padding: 25px;
+        border-radius: 20px;
+    }
+
+        .AR-picture-wraper img.selectable-picture.selected {
+            background-color: rgb(225, 225, 225, 85%);
+            padding: 5px;
+            border: 3px solid #fff;
+        }
+
+/*リンクコビーページ*/
+.link-shared-section {
+    background-color: #17647E;
+}
+
+.map-choosed-section {
+    background-color: #17647E;
+    width: 100%;
+    min-height: 350px;
+    max-height: 450px;
+}
+
+.choosed-map {
+    width: 100%;
+    height: 100%;
+}
+
+.map-sharedBtn-section {
+    background-color: #17647E;
+    padding-bottom: 50px;
+}
+
+.btn-line-shared {
+    background-image: url('/images/sendbyline.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding: 0px 102px;
+    height: 40px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.link-shared-section .float-btn-block{
+    bottom: 20px;
+}
+/* Custom styles for the location button */
+.custom-map-control-button, .custom-map-control-button-readonly {
+    background-image: url('/images/currentlocationvector.png');
+    background-size: cover;
+    width: 35px;
+    height: 35px;
+    border: 5px solid #17647E;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    background-color: #17647E;
+    margin: 1rem;
+}
+    .custom-map-control-button:hover {
+        background-color: #547a87;
+        border: 5px solid #547a87;
+    }
+
+    @media (max-width: 360px){
+        .page-title{
+            font-size: 9vw !important;
+        }
+    }
