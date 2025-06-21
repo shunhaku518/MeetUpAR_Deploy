@@ -32,4 +32,4 @@ jobs:
         -H "Authorization: Bearer $RENDER_API_TOKEN" \
         -H "Content-Type: application/json" \
         --data '{"branch": "main", "clearCache": true}' \
-        https://api.render.com/v1/services/srv-d1b6pdh5pdvs73dht270?key=V7lVSq3X2sA/deploys
+        https://api.render.com/v1/services/srv-d1b7rdh5pdvs73dj0ot0?key=Bv2eBdNF1Ow/deploys
